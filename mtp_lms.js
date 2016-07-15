@@ -1,6 +1,4 @@
 function MTP_LMS() {
-
-  this.ROOT_URL = 'https://my.lancome.com/';
   var _self = this;
 
   this.createCommunityPost = function(params) {

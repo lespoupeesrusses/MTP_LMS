@@ -140,7 +140,8 @@ Le callback de `createCommunityPost` retourne:
  status: 'OK',
  status_message: '',
  community_group_url: '<url_du_groupe>',
- show_me_url: '<url_profil_utilisateur>'
+ show_me_url: '<url_profil_utilisateur>',
+ root_url: 'root_lms_url'
 }
 
 ```
@@ -151,7 +152,8 @@ Le callback de `moduleWon` retourne:
 
 { event: 'create_training_module_completion',
  status: 'OK',
- status_message: ''
+ status_message: '',
+ root_url: 'root_lms_url'
 }
 
 ```
