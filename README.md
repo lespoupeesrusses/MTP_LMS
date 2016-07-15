@@ -7,19 +7,25 @@
 
 ## Généralités
 
-<<<<<<< HEAD
 Le LMS tourne sous un système UNIX et les assets (dont les modules), sont hébergés sur AWS S3.
+
 Les fichiers sont donc `case-sensitive` et doivent respecter les normes du web (pas de charactères spéciaux, pas d'espaces et pas de majuscules). Cf https://ed.fnal.gov/lincon/tech_web_naming.shtml
+
 Le contenu des fichiers peut être minifié pour optimiser les performances d'affichage.
+
 A l'intérieur du LMS le module est rendu dans une iframe à 100% de largeur et de hauteur, avec un burger menu en haut à gauche.
+
 Les 50 pixels haut gauche ne doivent pas être utilisés, ils seraient recouverts par le burger.
 
 
 ## Structuration d'un module
 
 Le module doit être livré sous forme d'une archive ZIP, sans mot de passe.
+
 Les fichiers composant le module peuvent être hierarchiques, et comprendre autant de dossiers et sous-dossiers nécessaires.
+
 Les inclusions de fichiers doivent utiliser des chemins relatifs.
+
 Le premier fichier html doit impérativement s'appeler `index.html`
 
 ATTENTION : vous devez compresser le contenu en partant de la racine du site (de l'index.html) et pas en partant d'un niveau au dessus. Cela signifie que si vous rangez vos fichier dans un dossier de projet vous ne devez pas compresser le dossier du projet mais bien les fichiers à l' intérieur de celui-ci.
@@ -30,7 +36,9 @@ Toutes les ressources nécessaires au bon fonctionnement du module doivent être
 ## Cas particulier d'un module SCORM
 
 Le LMS intégre le standard SCORM 2004 et les modules peuvent en bénéficier.
+
 Dans le cas d'un module scorm le premier fichier n'est pas nécessairement nommé index.html mais il doit être précisé dans le manifest (lmsmanifest.xml).
+
 Il est conseillé d'utiliser un wrapper d'API, comme celui disponible ici : https://github.com/pipwerks/scorm-api-wrapper/blob/master/src/JavaScript/SCORM_API_wrapper.js
 
 
@@ -97,9 +105,8 @@ Une fois connecté il est possible d'obtenir des valeurs depuis le lms ou d'en a
 Il est possible d'interagir avec le LMS pour marquer le module comme complété, noter un score et/ou poster dans la communauté.
 
 Nous mettons à disposition le fichier `mtp_lms.js` qui permet de faire l'interface entre le LMS et votre module.
-Il est disponible ici :
-https://github.com/semiodesign/MTP_LMS
 
+Il est disponible ici : https://github.com/semiodesign/MTP_LMS
 
 Deux méthodes sont disponibles :
 
