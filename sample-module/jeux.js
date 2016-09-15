@@ -19,17 +19,25 @@ $( document ).ready(function() {
     }
   };
 
-  submit.on('click', function() {
+  submit.on('click', function(e) {
+    e.preventDefault();
     lms.createCommunityPost({
-      content: field.val(), 
-      community_group_id: 17, 
+      content: field.val(),
+      community_group_id: 84,
       callback: communityPostAdded
     });
 
-    lms.moduleWon({
-      success: true,
+    var success = $('#checkbox').is(':checked');
+    console.log(success);
+
+    lms.sendModuleCompletion({
+      success: success,
       callback: moduleCompletionSaved
     });
   });
-});
 
+  if (lms.getMode() == "read-only") {
+    $('form').hide();
+    responseBox.append('You have no more tries');
+  }
+});

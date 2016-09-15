@@ -18,19 +18,19 @@ function MTP_LMS() {
   };
 
 
-  this.moduleWon = function(params) {
-    var dataTraining = {
+  this.sendModuleCompletion = function(params) {
+    var dataModule = {
       event: 'create_training_module_completion',
     }
 
     if ((params.callback != undefined) && (typeof params.callback == 'function')) {
-      this.callbackModuleWon = params.callback;
+      this.callbackModuleCompletion = params.callback;
       delete params.callback;
     }
 
-    dataTraining = this.mergeObjects(dataTraining, params);
+    dataModule = this.mergeObjects(dataModule, params);
 
-    this.sendToLMS(dataTraining);
+    this.sendToLMS(dataModule);
   };
 
   this.sendToLMS = function(object) {
@@ -43,28 +43,49 @@ function MTP_LMS() {
 
       case 'create_community_post' :
         if ((_self.callbackCommunityPost != undefined) && (typeof _self.callbackCommunityPost == 'function')) {
-          _self.callbackCommunityPost(event.data);  
+          _self.callbackCommunityPost(event.data);
           delete _self.callbackCommunityPost;
         }
-        break;      
-    
+        break;
+
       case 'create_training_module_completion' :
-        if ((_self.callbackModuleWon != undefined) && (typeof _self.callbackModuleWon == 'function')) {
-          _self.callbackModuleWon(event.data);  
-          delete _self.callbackModuleWon;
+        if ((_self.callbackModuleCompletion != undefined) && (typeof _self.callbackModuleCompletion == 'function')) {
+          _self.callbackModuleCompletion(event.data);
+          delete _self.callbackModuleCompletion;
         }
-        break;    
+        break;
     }
   };
+
+  // mode can be "read-only" or "normal"
+  this.getMode = function() {
+    var mode = this.getQueryParams(location.search).mode;
+    return mode;
+  }
 
   this.mergeObjects = function(obj1, obj2) {
     for (var key in obj2) {
       obj1[key] = obj2[key];
     }
-
     return obj1;
   }
 
+  this.getQueryParams = function(qs) {
+      qs = qs.split('+').join(' ');
+
+      var params = {},
+          tokens,
+          re = /[?&]?([^=]+)=([^&]*)/g;
+
+      while (tokens = re.exec(qs)) {
+          params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+      }
+
+      return params;
+  }
+
+
+
   window.addEventListener('message', _self.callbackFromLMS, false);
-  
+
 }
