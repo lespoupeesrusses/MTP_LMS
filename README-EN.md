@@ -1,48 +1,48 @@
-# Spécifications relatives au développement de modules de formation sur My Training Platform
+# General specifications about the development of training modules on My Training Platform
 
-- Généralités
-- Structuration d'un module
-- Cas particulier d'un module SCORM
-- Communication avec le LMS
+- Generalities
+- Structuration of a module
+- Particular case of a SCORM module
+- Communication with the LMS
 
-## Généralités
+## Generalities
 
-Le LMS tourne sous un système UNIX et les assets (dont les modules), sont hébergés sur AWS S3.
+The LMS runs thanks to an UNIX system and assets (including modules) are hosted on AWS S3.
 
-Les fichiers sont donc `case-sensitive` et doivent respecter les normes du web (pas de charactères spéciaux, pas d'espaces et pas de majuscules). Cf https://ed.fnal.gov/lincon/tech_web_naming.shtml
+That's why files are `case-sensitive` and have to respect web's standards (no special characters, no spaces, no capital letters). Cf https://ed.fnal.gov/lincon/tech_web_naming.shtml
 
-Le contenu des fichiers peut être minifié pour optimiser les performances d'affichage.
+Files' content can be reduced to optimize display results.
 
-A l'intérieur du LMS le module est rendu dans une iframe à 100% de largeur et de hauteur, avec un burger menu en haut à gauche.
+Inside the LMS, the module is displayed in an iframe of 100% of width and height, with a burger menu on the top left corner.
 
-Les 50 pixels haut gauche ne doivent pas être utilisés, ils seraient recouverts par le burger.
-
-
-## Structuration d'un module
-
-Le module doit être livré sous forme d'une archive ZIP, sans mot de passe.
-
-Les fichiers composant le module peuvent être hierarchiques, et comprendre autant de dossiers et sous-dossiers nécessaires.
-
-Les inclusions de fichiers doivent utiliser des chemins relatifs.
-
-Le premier fichier html doit impérativement s'appeler `index.html`
-
-ATTENTION : vous devez compresser le contenu en partant de la racine du site (de l'index.html) et pas en partant d'un niveau au dessus. Cela signifie que si vous rangez vos fichier dans un dossier de projet vous ne devez pas compresser le dossier du projet mais bien les fichiers à l' intérieur de celui-ci.
-
-Toutes les ressources nécessaires au bon fonctionnement du module doivent être inclues à l'intérieur de celui-ci. Pas d'appel HTTP extérieur.
+The first 50 pixels on the top left musn't be used because they would be recovered by the burger.
 
 
-## Cas particulier d'un module SCORM
+## Structuration of a module
 
-Le LMS intégre le standard SCORM 2004 et les modules peuvent en bénéficier.
+The module has to be delivered compressed in an archive ZIP without a password.
 
-Dans le cas d'un module scorm le premier fichier n'est pas nécessairement nommé index.html mais il doit être précisé dans le manifest (lmsmanifest.xml).
+Files composing the module can be prioritised and can count as many folders and subfolders as you need.
 
-Il est conseillé d'utiliser un wrapper d'API, comme celui disponible ici : https://github.com/pipwerks/scorm-api-wrapper/blob/master/src/JavaScript/SCORM_API_wrapper.js
+Inclusions of files have to use relative paths.
+
+The first html file must be called `index.html`
+
+WARNING : you must compressed the content beginning with the bottom of the website (from index.html) and not beginning with an upper level. This means that if you store your files into a project folder you mustn't compress this project folder but the files inside of it.
+
+All required ressources for the proper functioning of the module have to be included inside of it. There is no external call for HTTP.
 
 
-Exemple de code pour se connecter au LMS
+## Particular case of a SCORM module
+
+The LMS integrates a SCORM 2004 standard and modules which can benefit from it.
+
+In the case of a scorm module, the first file doesn't have to be named index.html but it has to be specify in the manifest (lmsmanifest.xml).
+
+It is recommended to use an API wrapper, like this one : https://github.com/pipwerks/scorm-api-wrapper/blob/master/src/JavaScript/SCORM_API_wrapper.js
+
+
+Code example to connect to LMS
 
 ```javascript
 
@@ -98,41 +98,41 @@ window.onunload = disconnectFromLMS;
 
 ```
 
-Une fois connecté il est possible d'obtenir des valeurs depuis le lms ou d'en attribuer en utilisant scorm.set(key, value) ou scorm.get(key)
+Once connected it's possible to get values from the LMS or to attribute them using scorm.set(key, value) or scorm.get(key).
 
-## Communication avec les fonctionnalités spécifiques du LMS
+## Communication LMS's specific features
 
-Il est possible d'interagir avec le LMS pour marquer le module comme complété, noter un score et/ou poster dans la communauté.
+You can interact with the LMS to mark the module as completed, to note a score and/or post in the community.
 
-Nous mettons à disposition le fichier `mtp_lms.js` qui permet de faire l'interface entre le LMS et votre module.
+We make available the file `mtp_lms.js` which does the connection between the LMS and your module.
 
-Il est disponible ici : https://github.com/semiodesign/MTP_LMS
+It is available here : https://github.com/semiodesign/MTP_LMS
 
-Deux méthodes sont disponibles :
+Two methods are available :
 
-> `createCommunityPost` prend un objet en variable. Cet objet peut avoir pour propriétés :
+> `createCommunityPost` owns an object as a variable. This objects can have for attributes :
 
-- `community_group_id`, integer, optionnel
-  - Si le `community_group_id` n'est pas renseigné, le post est alors créé sur le profil de l'utilisateur et est visible par ses amis.
-  - Dans le cas d'un `community_group_id` renseigné, le post est alors rattaché au groupe concerné.
-- `content`, string, optionnel
-  - Le contenu texte du post qui s'affichera dans la communauté.
-- `image`, string, optionnel
-  - Une image liée au post. Elle doit d'être passé en string base64.
-  - Nous conseillons l'utilisation de toDataURL() (cf: https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL) pour réaliser l'opération.
-- `callback`, function, optionnel
-  - Le nom de la fonction qui traitera les informations retounées par le LMS.
+- `community_group_id`, integer, optional
+  - If the `community_group_id` isn't filled, the post is created on the user's profile and visible by his friends.
+  - In the case of a `community_group_id` filled, the post is related to the relevant group.
+- `content`, string, optional
+  - The text content of the post which will appear in the community.
+- `image`, string, optional
+  - An image linked to the post. It has to be converted into string base64.
+  - We recommend you to use toDataURL() (cf: https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL) to do it.
+- `callback`, function, optional
+  - The name of the function which will process dates returned by the LMS.
 
-> `moduleWon` prend un objet en variable. Cet objet peut avoir pour propriétés:
+> `moduleWon` takes an object as a variable. This object can have for attributes:
 
-- `success`, boolean, requis
-  - Enregistre le module comme réussi ou non pour l'utilisateur courant.
-- `callback`, function, optionnel
-  - Le nom de la fonction qui traitera les informations retounées par le LMS.
+- `success`, boolean, require
+  - Save the module as succeeded or not for the current user.
+- `callback`, function, optional
+  - Name of the function which will process datas returned by the LMS.
 
-Si un callback est renseigné, il doit prendre en paramètre un objet (celui renvoyé par le LMS).
+If a callback is filled, it has to take an object (the one returned by the LMS) as a parameter.
 
-Le callback de `createCommunityPost` retourne:
+The callback of `createCommunityPost` returns:
 
 ```javascript
 
@@ -146,7 +146,7 @@ Le callback de `createCommunityPost` retourne:
 
 ```
 
-Le callback de `moduleWon` retourne:
+The callback of `moduleWon` returns:
 
 ```javascript
 
@@ -158,11 +158,11 @@ Le callback de `moduleWon` retourne:
 
 ```
 
-Une gestion des erreurs simple est mise en place.
-Si le traitement se passe bien, la clé `status` de l'objet renvoyé est `OK` et la clé `message_status` est vide.
-Dans le case contraire, la clé `status` de l'objet renvoyé est `ERROR` et la clé `message_status` permet de récupérer des informations plus précises sur la nature de l'erreur.
+An easy error handling is set up.
+If the treatment goes well, the key `status` of the returned object is `OK` and the key `message_status` is empty.
+Otherwise, the key `status` of the returned object is `ERROR` and the key `message_status` allows you to retrieve more specific datas about the nature of the mistake.
 
-Exemple d'utilisation:
+Example of use:
 
 ```javascript
 var group_id = 17;
@@ -173,17 +173,17 @@ var lms = new MTP_LMS();
 
 var communityPostAdded = function(obj) {
   if (obj.status === 'ERROR') {
-    // Traiter l'erreur
+    // Process the error
   } else {
-    // Proposer de voir le groupe dans lequel le post a été envoyé
+    // Offer to see the group in which the post has been sent
   }
 };
 
 var moduleCompletionSaved = function(obj) {
   if (obj.status === 'ERROR') {
-    // Traiter l'erreur
+    // Process the error
   } else {
-    // Remercier d'avoir jouer
+    // Thank for playing
   }
 };
 
