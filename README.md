@@ -26,9 +26,9 @@ Les fichiers composant le module peuvent être hierarchiques, et comprendre auta
 
 Les inclusions de fichiers doivent utiliser des chemins relatifs.
 
-Le premier fichier html doit impérativement s'appeler `index.html`
+Le premier fichier html doit impérativement s'appeler `index.html` et doit être à la racine du module
 
-ATTENTION : vous devez compresser le contenu en partant de la racine du site (de l'index.html) et pas en partant d'un niveau au dessus. Cela signifie que si vous rangez vos fichier dans un dossier de projet vous ne devez pas compresser le dossier du projet mais bien les fichiers à l' intérieur de celui-ci.
+ATTENTION : vous devez compresser le contenu en partant de la racine du site (de l'index.html) et pas en partant d'un niveau au dessus. Cela signifie que si vous rangez vos fichier dans un dossier de projet vous ne devez pas compresser le dossier du projet mais bien les fichiers à l'intérieur de celui-ci.
 
 Toutes les ressources nécessaires au bon fonctionnement du module doivent être inclues à l'intérieur de celui-ci. Pas d'appel HTTP extérieur.
 
@@ -123,7 +123,7 @@ Deux méthodes sont disponibles :
 - `callback`, function, optionnel
   - Le nom de la fonction qui traitera les informations retounées par le LMS.
 
-> `moduleWon` prend un objet en variable. Cet objet peut avoir pour propriétés:
+> `moduleWon` prend un objet en variable. Cet objet peut avoir pour propriétés :
 
 - `success`, boolean, requis
   - Enregistre le module comme réussi ou non pour l'utilisateur courant.
