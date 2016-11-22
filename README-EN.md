@@ -20,26 +20,26 @@ The first 50 pixels on the top left musn't be used because they would be recover
 
 ## Structuration of a module
 
-The module has to be delivered compressed in an archive ZIP without a password.
+The module has to be delivered compressed in a ZIP archive, without password.
 
-Files composing the module can be prioritised and can count as many folders and subfolders as you need.
+Files composing the module can be hierarchical and can count as many folders and subfolders as you need.
 
 Inclusions of files have to use relative paths.
 
-The first html file must be called `index.html`
+The main html file must be called `index.html` and must be at the module's root
 
-WARNING : you must compressed the content beginning with the bottom of the website (from index.html) and not beginning with an upper level. This means that if you store your files into a project folder you mustn't compress this project folder but the files inside of it.
+WARNING: you must compressed the content beginning with the bottom of the website (from index.html) and not beginning with an upper level. This means that if you store your files into a project folder you mustn't compress this project folder but the files inside of it.
 
-All required ressources for the proper functioning of the module have to be included inside of it. There is no external call for HTTP.
+All required ressources for the proper functioning of the module have to be included inside of it. No external HTTP requests.
 
 
 ## Particular case of a SCORM module
 
-The LMS integrates a SCORM 2004 standard and modules which can benefit from it.
+The LMS integrates a SCORM 2004 standard and modules can use it.
 
 In the case of a scorm module, the first file doesn't have to be named index.html but it has to be specify in the manifest (lmsmanifest.xml).
 
-It is recommended to use an API wrapper, like this one : https://github.com/pipwerks/scorm-api-wrapper/blob/master/src/JavaScript/SCORM_API_wrapper.js
+It is recommended to use an API wrapper, like this one: https://github.com/pipwerks/scorm-api-wrapper/blob/master/src/JavaScript/SCORM_API_wrapper.js
 
 
 Code example to connect to LMS
@@ -98,34 +98,34 @@ window.onunload = disconnectFromLMS;
 
 ```
 
-Once connected it's possible to get values from the LMS or to attribute them using scorm.set(key, value) or scorm.get(key).
+Once connected it's possible to set/get values from the LMS, using scorm.set(key, value) or scorm.get(key).
 
-## Communication LMS's specific features
+## Communication with LMS's specific features
 
 You can interact with the LMS to mark the module as completed, to note a score and/or post in the community.
 
 We make available the file `mtp_lms.js` which does the connection between the LMS and your module.
 
-It is available here : https://github.com/semiodesign/MTP_LMS
+It is available here: https://github.com/semiodesign/MTP_LMS
 
-Two methods are available :
+Two methods are available:
 
-> `createCommunityPost` owns an object as a variable. This objects can have for attributes :
+> `createCommunityPost` take an object as a variable. This object can have these attributes:
 
 - `community_group_id`, integer, optional
-  - If the `community_group_id` isn't filled, the post is created on the user's profile and visible by his friends.
+  - If the `community_group_id` isn't filled, the post is created on the user's profile and is visible by his friends.
   - In the case of a `community_group_id` filled, the post is related to the relevant group.
 - `content`, string, optional
   - The text content of the post which will appear in the community.
 - `image`, string, optional
-  - An image linked to the post. It has to be converted into string base64.
-  - We recommend you to use toDataURL() (cf: https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL) to do it.
+  - An image linked to the post. It has to be converted into a base64 string.
+  - We recommend the use of toDataURL() (cf: https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL) to do it.
 - `callback`, function, optional
-  - The name of the function which will process dates returned by the LMS.
+  - The name of the function which will process datas returned by the LMS.
 
 > `moduleWon` takes an object as a variable. This object can have for attributes:
 
-- `success`, boolean, require
+- `success`, boolean, required
   - Save the module as succeeded or not for the current user.
 - `callback`, function, optional
   - Name of the function which will process datas returned by the LMS.
@@ -160,7 +160,7 @@ The callback of `moduleWon` returns:
 
 An easy error handling is set up.
 If the treatment goes well, the key `status` of the returned object is `OK` and the key `message_status` is empty.
-Otherwise, the key `status` of the returned object is `ERROR` and the key `message_status` allows you to retrieve more specific datas about the nature of the mistake.
+Otherwise, the key `status` of the returned object is `ERROR` and the key `message_status` allows you to retrieve more specific datas about the nature of the error.
 
 Example of use:
 
