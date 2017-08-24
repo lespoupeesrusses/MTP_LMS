@@ -125,7 +125,7 @@ Two methods are available:
 - `callback`, function, optional
   - The name of the function which will process datas returned by the LMS.
 
-> `moduleWon` takes an object as a variable. This object can have for attributes:
+> `sendModuleCompletion` takes an object as a variable. This object can have for attributes:
 
 - `success`, boolean, required
   - Save the module as succeeded or not for the current user.
@@ -196,7 +196,7 @@ submit.on('click', function() {
     callback: communityPostAdded
   });
 
-  lms.moduleWon({
+  lms.sendModuleCompletion({
     success: true,
     callback: moduleCompletionSaved
   });
