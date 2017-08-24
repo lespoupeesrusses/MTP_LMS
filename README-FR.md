@@ -121,6 +121,8 @@ Deux méthodes sont disponibles :
 - `image`, string, optionnel
   - Une image liée au post. Elle doit d'être passé en string base64.
   - Nous conseillons l'utilisation de toDataURL() (cf: https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL) pour réaliser l'opération.
+- `video`, string, optionnel
+  - Une vidéo liée au post. Elle doit d'être passé en tant qu'URL MP4.
 - `callback`, function, optionnel
   - Le nom de la fonction qui traitera les informations retounées par le LMS.
 
