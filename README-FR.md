@@ -203,8 +203,7 @@ submit.on('click', function() {
 
   lms.sendModuleCompletion({
     success: true,
-    callback:
-    CompletionSaved
+    callback: moduleCompletionSaved
   });
 });
 
