@@ -153,7 +153,7 @@ Le callback de `createCommunityPost` retourne:
 
 ```
 
-Le callback de `moduleWon` retourne:
+Le callback de `sendModuleCompletion` retourne:
 
 ```javascript
 
